@@ -12,9 +12,9 @@ public class Judge{
 
 
 		int[][] adjacency_matrix = graph.getAdjacencyMatix();
-		for(int row=0; row<adjacency_matrix.length; row++){
-			if(isRowEmpty(adjacency_matrix[row])){
-				return row + 1;
+		for(int person=0; person<adjacency_matrix.length; person++){
+			if(checkPerson(adjacency_matrix[person], person, adjacency_matrix)){
+				return person + 1;
 			}
 		}
 
@@ -23,6 +23,7 @@ public class Judge{
 	
 	public boolean isRowEmpty(int[] row){
 		boolean empty = true;
+		//This checks if the row is empty
 		for(int i=0; i<row.length; i++){
 			if(row[i] == 1)
 				empty = false;
@@ -31,18 +32,66 @@ public class Judge{
 		return empty;
 	}
 
+
+	public boolean isColFull(int col, int[][] a){
+		boolean full = true;
+
+		for(int i=0; i<col; i++){
+			if(a[i][col] == 0)
+				full = false;
+		}
+
+		if(a[col][col]!=0)
+			full = false;
+
+		for(int j=col+1; j<a.length; j++){
+			if(a[j][col] == 0)
+				full = false;
+		}
+
+		return full;
+	}
+
+	public boolean checkPerson(int[] row, int col, int[][]a){
+		return isRowEmpty(row) && isColFull(col, a);
+	}
+
 	public static void main(String[] args) {
 		Judge judge = new Judge();
+		int[][] example_1 = {{1,2}};
+		int answer1 = judge.findJudge(2, example_1);
+
+		int[][] example_2 = {{1,3}, {2,3}};
+		int answer2 = judge.findJudge(3, example_2);
+
 		int[][] example_5 = {{1, 3}, {1, 4}, {2, 3}, {2, 4}, {4,3}};
 		int answer5 = judge.findJudge(4, example_5);
 
 		int[][] example_3 = {{1, 3}, {2, 3}, {3,1}};
 		int answer3 = judge.findJudge(3, example_3);
 
-		System.out.println("This is the answer for example 5 in the pdf: " 
-			+ answer5);
+		int[][] example_4 = {{1,2},{2,3}};
+		int answer4 = judge.findJudge(3, example_4);
+
+
+		System.out.println("This is the answer for example 1 in the pdf: " 
+			+ answer1);
+		
+		System.out.println("This is the answer for example 2 in the pdf: " 
+			+ answer2);
+		
 		System.out.println("This is the answer for example 3 in the pdf: " 
 			+ answer3);
+
+		System.out.println("This is the answer for example 4 in the pdf: " 
+			+ answer4);
+
+		System.out.println("This is the answer for example 5 in the pdf: " 
+			+ answer5);
+
+
+		
+		
 	}
 
 }
